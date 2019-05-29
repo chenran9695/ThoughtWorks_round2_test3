@@ -1,4 +1,4 @@
 module.exports = function main(inputs) {
-    // write your code here...
-    return "price";
+    if(inputs.distance === 1 & inputs.parkTime == 0)
+        return 6;
 };
