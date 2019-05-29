@@ -28,4 +28,11 @@ describe('taxi fee', function () {
         let expected = 14;
         expect(summary).toEqual(expected);
     });
+
+    it('fee is not an interger' , function() {
+        let inputs = {distance:11,parkTime:7};
+        let summary = main(inputs);
+        let expected = 16;
+        expect(summary).toEqual(expected);
+    });
 });
