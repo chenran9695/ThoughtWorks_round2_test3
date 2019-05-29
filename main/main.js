@@ -21,26 +21,25 @@ function getFeeBetween2To8(distance) {
 function getFeeMoreThan8(distance){
     return distance*priceMoreThan8;
 }
-//计算总的费用
-function caculateFee(inputs) {
-    //两公里以内的基本费用（包含停车产生的费用）如下：
-    let fee = basicFee + getParkFee(inputs.parkTime);
+
+module.exports = function main(inputs) {
+    let fee = 0;
     let distance = inputs.distance;
-    //计算大于8公里的路程产生的费用：
+    //大于8公里的路程产生的费用：
     if (distance >8) {
         fee += getFeeMoreThan8(distance - 8);
         distance = 8;
     }
-    //计算介于2公里和8公里之间产生的费用
+    //介于2公里和8公里之间产生的费用
     if (distance > 2) {
         fee += getFeeBetween2To8(distance - 2);
     }
-    return fee;
-}
-
-module.exports = function main(inputs) {
-    //对费用进行四舍五入
-    return Math.round(caculateFee(inputs));
+    //基本起步费
+    fee += basicFee;
+    //停车费
+    fee += getParkFee(inputs.parkTime);
+    //对费用进行四舍五入,并返回
+    return Math.round(fee);
 };
 
 
