@@ -8,6 +8,7 @@ var priceBetweent2To8 = 0.8;
 var rate = 0.5;
 // 8公里以外的收费（元/公里）
 var priceMoreThan8 = priceBetweent2To8 * (1+rate);
+
 //计算停车产生的费用
 function getParkFee(parkTime) {
     return parkTime * parkPrice;
@@ -24,13 +25,15 @@ function getFeeMoreThan8(distance){
 function caculateFee(inputs) {
     //两公里以内的基本费用（包含停车产生的费用）如下：
     let fee = basicFee + getParkFee(inputs.parkTime);
-    //当总路程介于两公里和八公里之间，费用计算如下：
-    if (inputs.distance >= 2 & inputs.distance <= 8) {
-        fee += getFeeBetween2To8(inputs.distance - 2);
+    let distance = inputs.distance;
+    //计算大于8公里的路程产生的费用：
+    if (distance >8) {
+        fee += getFeeMoreThan8(distance - 8);
+        distance = 8;
     }
-    //如果路程大于8公里，费用计算如下：
-    else if (inputs.distance > 8) {
-        fee += (getFeeBetween2To8(6) + getFeeMoreThan8(inputs.distance - 8));
+    //计算介于2公里和8公里之间产生的费用
+    if (distance > 2) {
+        fee += getFeeBetween2To8(distance - 2);
     }
     return fee;
 }
