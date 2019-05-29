@@ -21,14 +21,18 @@ function getFeeMoreThan8(distance){
     return distance*priceMoreThan8;
 }
 
-module.exports = function main(inputs) {
-    let fee = basicFee+getParkFee(inputs.parkTime);
-    if(inputs.distance>=2 & inputs.distance<=8){
-        fee += getFeeBetween2To8(inputs.distance-2);
-    }
-    else if(inputs.distance>8){
-        fee += (getFeeBetween2To8(6)+getFeeMoreThan8(inputs.distance-8));
+function caculateFee(inputs) {
+    let fee = basicFee + getParkFee(inputs.parkTime);
+    if (inputs.distance >= 2 & inputs.distance <= 8) {
+        fee += getFeeBetween2To8(inputs.distance - 2);
+    } else if (inputs.distance > 8) {
+        fee += (getFeeBetween2To8(6) + getFeeMoreThan8(inputs.distance - 8));
     }
     return fee;
+}
+
+module.exports = function main(inputs) {
+    return Math.round(caculateFee(inputs));
 };
+
 
